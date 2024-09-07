@@ -1,39 +1,27 @@
 .footer {
     display: flex;
-    justify-content: space-between;  /* Distribute space between left and right sections */
-    align-items: center;             /* Vertically center the content */
-    padding: 0 20px 24px;
-    background-color: #f3f3f3;       /* Match the background color of the page */
-    color: black;                    /* Adjust text color if needed for contrast */
-    position: fixed;                 /* Fix the footer to the bottom of the page */
-    bottom: 0;
-    width: 100%;                     /* Full width */
+    justify-content: space-between;  
+    align-items: center;             
+    padding: 0 0 24px;
+    background-color: #f3f3f3;       
+    color: black;                    
+    position: absolute;                
+    top: calc(100%);
+    width: 100%;                    
   }
   
-  .footer__left,
-  .footer__right {
-    font-size: 14px;                 /* Adjust font size */
-  }
-  
+
   .footer__left {
     text-align: left;
+    font-size: 14px;
+    padding-left: 20px;
   }
   
   .footer__right {
     text-align: right;
-    padding-right: 40px;
+    padding-right: 20px;
+    font-size: 14px;
   }
   
 
-  @media (max-width: 600px) {
-    .footer {
-      flex-direction: column;       /* Stack the items vertically on small screens */
-      text-align: center;           /* Center align the text */
-    }
-  
-    .footer__left,
-    .footer__right {
-      margin-bottom: 5px;           /* Add some space between the text blocks */
-    }
-  }
-  
+ 

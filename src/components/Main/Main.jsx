@@ -5,10 +5,10 @@ import ItemCard from "../ItemCard/ItemCard";
 
 function Main({ weatherData, handleCardClick }) {
     return (<main>
-        <WeatherCard />
+        <WeatherCard weatherData={weatherData} />
         <section className="cards">
             <p className="cards__text">
-                Its &deg; F hot boi
+                Its {weatherData.temp.F}&deg; outside/ You may want to wear:
                 </p>
                 <ul className="cards__list">
                     {defaultClothingItems.filter((item) => {
