@@ -6,7 +6,7 @@
   },
   {
     day: true,
-    condition: "cloudy",
+    condition: "clouds",
     url: new URL("../assets/day/cloudy.svg", import.meta.url)
   },
   {
