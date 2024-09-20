@@ -1,32 +1,70 @@
 .header {
     display: flex;
     align-items: center;
+    justify-content: space-between; 
     padding: 32px 0 28px;
+    flex-wrap: wrap; 
 }
 
-.header__logo{
+.header__logo {
     margin-right: 24px;
+    max-width: 100px; 
 }
 
-.header__date-and-location{
+.header__date-and-location {
     margin: 0;
     font-weight: 700;
+    font-size: 1.2rem; 
 }
 
-.header__add-clothes-btn{
-    margin: 0 20px 0 auto; 
+.header__add-clothes-btn {
     border-style: none;
     font-weight: 700;
-    background-color: #F3F3F3;
+    background-color: #f3f3f3;
+    white-space: nowrap;
+    padding: 8px 16px; 
+    flex-shrink: 0; 
 }
 
-.header__user-container{
+.header__user-container {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 15px;
     font-weight: 700;
+    margin-left: auto;
+    max-width: 1360px;
 }
 
-.header__username{
+.header__username {
     margin: 0;
+}
+
+.header__avatar {
+    margin-right: 0;
+    width: 40px; 
+    height: 40px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center; 
+    text-decoration: none; 
+    gap: 12px;
+  }
+
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .header__add-clothes-btn {
+        margin-top: 10px; 
+    }
+
+    .header__user-container {
+        margin-left: 0; 
+        gap: 8px;
+    }
 }

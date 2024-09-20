@@ -20,4 +20,5 @@
     object-fit: cover;
     object-position: right top;
     width: 100%;
+    background-color: transparent;
 }

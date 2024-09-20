@@ -1,0 +1,25 @@
+.clothes-section__items {
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px;
+}
+
+
+@media (max-width: 1050px) {
+    .clothes-section__items {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 800px) {
+    .clothes-section__items {
+        grid-template-columns: 1fr; 
+    }
+}
+
+.clothes-section__header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}

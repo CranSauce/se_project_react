@@ -1,0 +1,56 @@
+.modal__content_type_confirm{
+    background-color: #f3f3f3;
+    max-width: 670px;
+    width: 100%;
+    max-height: 280px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 12px;
+}
+
+.modal__confirm-title{
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    align-items: center;
+    text-align: center;
+    width: 60%;
+}
+
+.modal__buttons{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.modal__confirm{
+    border-style: none;
+    color: rgba(255,77,0,1);
+    font-weight: 700;
+}
+
+.modal__cancel{
+    background-color: #f3f3f3;
+    color: black;
+    border-style: none;
+    font-weight: 700;
+}
+
+.modal__close-btn_type_confirm{
+    position: relative;
+    left: calc(45%);
+    bottom: 15px;
+    background: url('../../assets/Closebutton.svg') no-repeat center;
+    background-size: contain; 
+    background-color: transparent;
+    border: none;
+    width: 30px;              
+    height: 30px;             
+    cursor: pointer;
+    padding: 0;
+}

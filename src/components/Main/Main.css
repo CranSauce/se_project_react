@@ -6,3 +6,17 @@
     list-style-type: none;
     gap: 21px;
 }
+
+@media (max-width: 1050px) {
+    .cards__list {
+        grid-template-columns: repeat(2, 1fr);
+        justify-content: center;
+    }
+}
+
+@media (max-width: 800px) {
+    .cards__list {
+        grid-template-columns: 1fr; 
+        justify-content: center;
+    }
+}

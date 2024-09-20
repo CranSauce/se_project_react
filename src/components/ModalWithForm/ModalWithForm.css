@@ -11,9 +11,12 @@
     justify-content: center;
     align-items: center;
     font-family: "Cabinet Grotesk";
+    opacity: 0; /* Start hidden */
+    transition: opacity 0.3s ease; /* Fade transition */
 }
 
 .modal_opened{
+    opacity: 1;
     visibility: visible;
 }
 
@@ -33,6 +36,10 @@
     background-color: black;
     color: white;
     margin-top: 22px;
+}
+
+.modal__submit_disabled{
+    opacity: 0.5;
 }
 
 .modal__close-btn{

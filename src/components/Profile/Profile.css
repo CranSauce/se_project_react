@@ -1,0 +1,13 @@
+.profile {
+    display: grid;
+    grid-template-columns: 1fr 3fr; /* Sidebar takes 1 part, ClothesSection takes 3 parts */
+    gap: 1rem; /* Optional: Adds space between the columns */
+  }
+  
+  .profile__sidebar {
+    grid-column: 1; /* Sidebar takes the first column */
+  }
+  
+  .profile__clothes-section {
+    grid-column: 2; /* ClothesSection takes the second column */
+  }

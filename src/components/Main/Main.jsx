@@ -1,9 +1,8 @@
 import "./Main.css";
 import WeatherCard from "../WeatherCard/WeatherCard";
-import { defaultClothingItems } from "../../utils/constants";
 import ItemCard from "../ItemCard/ItemCard";
 
-function Main({ weatherData, handleCardClick }) {
+function Main({ weatherData, handleCardClick, clothingItems }) {
   return (
     <main>
       <WeatherCard weatherData={weatherData} />
@@ -12,8 +11,7 @@ function Main({ weatherData, handleCardClick }) {
           Its {weatherData.temp.F}&deg; outside/ You may want to wear:
         </p>
         <ul className="cards__list">
-          {defaultClothingItems
-            .filter((item) => {
+          {clothingItems.filter((item) => {
               return item.weather === weatherData.type;
             })
             .map((item) => {
