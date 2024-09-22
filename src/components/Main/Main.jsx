@@ -1,14 +1,23 @@
+import { useContext } from "react";
 import "./Main.css";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
+import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 
 function Main({ weatherData, handleCardClick, clothingItems }) {
+  const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
+
+  const displayedTemp =
+  currentTemperatureUnit === "F"
+    ? weatherData.temp.F
+    : ((weatherData.temp.F - 32) * 5) / 9;
+
   return (
     <main>
       <WeatherCard weatherData={weatherData} />
       <section className="cards">
         <p className="cards__text">
-          Its {weatherData.temp.F}&deg; outside/ You may want to wear:
+          Its {Math.round(displayedTemp)}&deg; {currentTemperatureUnit} outside/ You may want to wear:
         </p>
         <ul className="cards__list">
           {clothingItems.filter((item) => {

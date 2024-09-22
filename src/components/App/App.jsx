@@ -68,7 +68,7 @@ function App() {
 
     addItem(newItem)
       .then((newItem) => {
-        setClothingItems([...clothingItems, newItem]);
+        setClothingItems([newItem, ...clothingItems]);
       })
       .catch((error) => console.error('Error adding item:', error));
   };
@@ -115,6 +115,7 @@ function App() {
                   weatherData={weatherData}
                   onCardClick={handleCardClick}
                   clothingItems={clothingItems}
+                  handleAddClick={handleAddClick}
                 />
               }
             />
