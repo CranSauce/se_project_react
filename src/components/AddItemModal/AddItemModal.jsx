@@ -1,22 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-
+import { useForm } from "../../hooks/useForm.js";
 
 function AddItemModal({ closeActiveModal, activeModal, onAddItem }) {
-  const [name, setName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [weatherType, setWeatherType] = useState("");
+  const { values, handleChange, setValues } = useForm({
+    name: "",
+    imageUrl: "",
+    weatherType: "",
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const newItem = {
       _id: Date.now(),
-      name,
-      imageUrl,
-      weather: weatherType,
+      name: values.name,
+      imageUrl: values.imageUrl,
+      weather: values.weatherType,
     };
-    onAddItem(newItem);  
-    closeActiveModal();
+
+    onAddItem(newItem);
+
+    setValues({
+      name: "",
+      imageUrl: "",
+      weatherType: "",
+    });
   };
 
   return (
@@ -25,14 +34,15 @@ function AddItemModal({ closeActiveModal, activeModal, onAddItem }) {
       buttonText="Add Garment"
       title="New Garment"
       isOpen={activeModal === "add-garment"}
-      onSubmit={handleSubmit} 
+      onSubmit={handleSubmit}
     >
       <label htmlFor="name" className="modal__label">
         Name
         <input
           id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          name="name"
+          value={values.name}
+          onChange={handleChange}
           placeholder="Name"
           type="text"
           className="modal__input modal__input-underline"
@@ -45,8 +55,9 @@ function AddItemModal({ closeActiveModal, activeModal, onAddItem }) {
         Image
         <input
           id="imageUrl"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
+          name="imageUrl"
+          value={values.imageUrl}
+          onChange={handleChange}
           placeholder="Image URL"
           type="url"
           className="modal__input modal__input-underline"
@@ -60,9 +71,9 @@ function AddItemModal({ closeActiveModal, activeModal, onAddItem }) {
             id="hot"
             name="weatherType"
             type="radio"
-            value="Hot"
-            checked={weatherType === "Hot"}
-            onChange={(e) => setWeatherType(e.target.value)}
+            value="hot"
+            checked={values.weatherType === "hot"}
+            onChange={handleChange}
             className="modal__radio-input"
           />
           Hot
@@ -72,9 +83,9 @@ function AddItemModal({ closeActiveModal, activeModal, onAddItem }) {
             id="warm"
             name="weatherType"
             type="radio"
-            value="Warm"
-            checked={weatherType === "Warm"}
-            onChange={(e) => setWeatherType(e.target.value)}
+            value="warm"
+            checked={values.weatherType === "warm"}
+            onChange={handleChange}
             className="modal__radio-input"
           />
           Warm
@@ -84,9 +95,9 @@ function AddItemModal({ closeActiveModal, activeModal, onAddItem }) {
             id="cold"
             name="weatherType"
             type="radio"
-            value="Cold"
-            checked={weatherType === "Cold"}
-            onChange={(e) => setWeatherType(e.target.value)}
+            value="cold"
+            checked={values.weatherType === "cold"}
+            onChange={handleChange}
             className="modal__radio-input"
           />
           Cold

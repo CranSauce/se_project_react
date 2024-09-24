@@ -7,20 +7,19 @@ import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit
 function Main({ weatherData, handleCardClick, clothingItems }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
-  const displayedTemp =
-  currentTemperatureUnit === "F"
-    ? weatherData.temp.F
-    : ((weatherData.temp.F - 32) * 5) / 9;
+  const displayedTemp = weatherData.temp[currentTemperatureUnit];
 
   return (
     <main>
       <WeatherCard weatherData={weatherData} />
       <section className="cards">
         <p className="cards__text">
-          Its {Math.round(displayedTemp)}&deg; {currentTemperatureUnit} outside/ You may want to wear:
+          Its {Math.round(displayedTemp)}&deg; {currentTemperatureUnit} outside/
+          You may want to wear:
         </p>
         <ul className="cards__list">
-          {clothingItems.filter((item) => {
+          {clothingItems
+            .filter((item) => {
               return item.weather === weatherData.type;
             })
             .map((item) => {

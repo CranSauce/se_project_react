@@ -4,7 +4,11 @@ import Header from "../Header/Header";
 import "./App.css";
 import Main from "../Main/Main";
 import ItemModal from "../ItemModal/ItemModal";
-import { getWeather, getWeatherType, filterWeatherData } from "../../utils/weatherApi";
+import {
+  getWeather,
+  getWeatherType,
+  filterWeatherData,
+} from "../../utils/weatherApi";
 import { coordinates, APIkey } from "../../utils/constants";
 import Footer from "../Footer/Footer";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
@@ -22,9 +26,10 @@ function App() {
 
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [activeModal, setActiveModal] = useState("");
-  const [selectedCard, setSelectedCard] = useState([]);
   const [clothingItems, setClothingItems] = useState([]);
-  const [selectedCardId, setSelectedCardId] = useState(null); // Added state to store card ID
+  const [selectedCard, setSelectedCard] = useState({});
+  const [selectedCardId, setSelectedCardId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleAddClick = () => {
     setActiveModal("add-garment");
@@ -36,25 +41,28 @@ function App() {
   };
 
   const handleDeleteClick = (cardId) => {
+    console.log(cardId);
     setSelectedCardId(cardId);
     setActiveModal("confirm");
   };
 
   const handleDelete = () => {
     if (selectedCardId) {
+      console.log("Deleting item with ID:", selectedCardId);
       deleteItem(selectedCardId)
         .then(() => {
-          setClothingItems((prevItems) => prevItems.filter((item) => item._id !== selectedCardId));
+          setClothingItems((prevItems) =>
+            prevItems.filter((item) => item._id !== selectedCardId)
+          );
           closeActiveModal();
         })
-        .catch((error) => console.error('Error deleting item:', error));
+        .catch((error) => console.error("Error deleting item:", error));
     }
   };
-  
 
   const closeActiveModal = () => {
     setActiveModal("");
-    setSelectedCardId(null); 
+    setSelectedCardId(null);
   };
 
   const handleToggleSwitchChange = () => {
@@ -62,15 +70,20 @@ function App() {
   };
 
   const handleAddItem = (item) => {
-    const weatherType = getWeatherType(weatherData.temp.F); 
-    const newItem = { ...item, weather: weatherType }; 
+    const newItem = { ...item, weather: item.weather };
 
+    setIsLoading(true);
 
     addItem(newItem)
       .then((newItem) => {
         setClothingItems([newItem, ...clothingItems]);
+        closeActiveModal();
       })
-      .catch((error) => console.error('Error adding item:', error));
+      .catch((error) => console.error("Error adding item:", error))
+
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -81,6 +94,22 @@ function App() {
       })
       .catch(console.error);
   }, []);
+
+  useEffect(() => {
+    if (!activeModal) return;
+
+    const handleEscClose = (e) => {
+      if (e.key === "Escape") {
+        closeActiveModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscClose);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [activeModal]);
 
   useEffect(() => {
     getItems()
@@ -125,17 +154,19 @@ function App() {
           closeActiveModal={closeActiveModal}
           activeModal={activeModal}
           onAddItem={handleAddItem}
+          buttonText={isLoading ? "Saving..." : "Save"}
         />
         <ItemModal
           onClose={closeActiveModal}
           activeModal={activeModal}
           card={selectedCard}
-          onDeleteClick={handleDeleteClick} 
+          onDeleteClick={handleDeleteClick}
+          buttonText={isLoading ? "Saving..." : "Save"}
         />
-        <ConfirmationModal 
-          closeActiveModal={closeActiveModal} 
-          activeModal={activeModal} 
-          handleDelete={handleDelete} 
+        <ConfirmationModal
+          closeActiveModal={closeActiveModal}
+          activeModal={activeModal}
+          handleDelete={handleDelete}
         />
         <Footer />
       </CurrentTemperatureUnitContext.Provider>

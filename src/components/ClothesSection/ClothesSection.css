@@ -1,36 +1,35 @@
 .clothes-section__items {
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 20px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
-.clothes-section__title{
-    font-weight: 700;
+.clothes-section__title {
+  font-weight: 700;
 }
 
-.clothes-section__button{
-    border-style: none;
-    font-weight: 700;
-    opacity: 0.5;
-    background-color: transparent;
+.clothes-section__button {
+  border-style: none;
+  font-weight: 700;
+  opacity: 0.5;
+  background-color: transparent;
 }
-
 
 @media (max-width: 1050px) {
-    .clothes-section__items {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .clothes-section__items {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 800px) {
-    .clothes-section__items {
-        grid-template-columns: 1fr; 
-    }
+  .clothes-section__items {
+    grid-template-columns: 1fr;
+  }
 }
 
 .clothes-section__header {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }

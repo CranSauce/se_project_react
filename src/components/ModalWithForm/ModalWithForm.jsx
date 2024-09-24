@@ -1,7 +1,14 @@
 import React from "react";
 import "./ModalWithForm.css";
 
-function ModalWithForm({ onClose, buttonText, title, isOpen, onSubmit, children }) {
+function ModalWithForm({
+  onClose,
+  buttonText,
+  title,
+  isOpen,
+  onSubmit,
+  children,
+}) {
   return (
     <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
       <div className="modal__content">
@@ -19,4 +26,3 @@ function ModalWithForm({ onClose, buttonText, title, isOpen, onSubmit, children 
 }
 
 export default ModalWithForm;
-

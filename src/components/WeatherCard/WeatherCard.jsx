@@ -40,4 +40,3 @@ function WeatherCard({ weatherData }) {
 }
 
 export default WeatherCard;
-

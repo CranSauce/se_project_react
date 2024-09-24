@@ -13,24 +13,24 @@ function Header({ handleAddClick, weatherData }) {
   return (
     <header className="header">
       <Link to="/">
-      <img className="header__logo" alt="Logo" src={logo} />
+        <img className="header__logo" alt="Logo" src={logo} />
       </Link>
       <p className="header__date-and-location">
         {currentDate}, {weatherData.city}
       </p>
-      
+
       <div className="header__user-container">
-      <ToggleSwitch />
-      <button
-        onClick={handleAddClick}
-        type="button"
-        className="header__add-clothes-btn"
-      >
-        + Add Clothes
-      </button>
-      <Link to="/profile" className="user-info">
-        <p className="header__username">Name</p>
-        <img src={avatar} alt="Avatar" className="header__avatar" />
+        <ToggleSwitch />
+        <button
+          onClick={handleAddClick}
+          type="button"
+          className="header__add-clothes-btn"
+        >
+          + Add Clothes
+        </button>
+        <Link to="/profile" className="user-info">
+          <p className="header__username">Name</p>
+          <img src={avatar} alt="Avatar" className="header__avatar" />
         </Link>
       </div>
     </header>
