@@ -1,7 +1,7 @@
 {
   "items": [
     {
-      "_id": 0,
+      "_id": 42,
       "name": "Beanie",
       "weather": "cold",
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Beanie.png?etag=bc10497cc80fa557f036e94f9999f7b2"
@@ -122,6 +122,12 @@
     },
     {
       "_id": 1727159273698,
+      "name": "CranSauce",
+      "imageUrl": "https://i0.wp.com/picjumbo.com/wp-content/uploads/silhouette-of-a-guy-with-a-cap-at-red-sky-sunset-free-image.jpeg?h=800&quality=80",
+      "weather": "warm"
+    },
+    {
+      "_id": 1727177529991,
       "name": "CranSauce",
       "imageUrl": "https://i0.wp.com/picjumbo.com/wp-content/uploads/silhouette-of-a-guy-with-a-cap-at-red-sky-sunset-free-image.jpeg?h=800&quality=80",
       "weather": "warm"

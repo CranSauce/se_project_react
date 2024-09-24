@@ -1,10 +1,9 @@
 .modal__content_type_preview {
   padding: 0;
-  background: none;
+  background: transparent;
   display: flex;
   flex-direction: column;
   max-width: 100%;
-  max-width: 498px;
   height: 100%;
   max-height: 610px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -31,7 +30,7 @@
   max-width: 100%;
   width: 498px;
   height: 610px;
-  height: 80vh;
+  height: 83%;
   border-radius: 16px 16px 0 0;
   object-fit: cover;
 }
@@ -70,4 +69,16 @@
   position: absolute;
   right: 10px;
   top: calc(100% - 75px);
+}
+
+
+@media (max-width: 768px) {
+  .modal__image{
+    height: 75vh;
+    width: 50vw;
+  }
+
+  .modal__close-btn_type_preview{
+    top: 30px;
+  }
 }

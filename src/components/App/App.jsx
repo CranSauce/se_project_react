@@ -28,7 +28,7 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [clothingItems, setClothingItems] = useState([]);
   const [selectedCard, setSelectedCard] = useState({});
-  const [selectedCardId, setSelectedCardId] = useState(null);
+  const [selectedCardId, setSelectedCardId] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   const handleAddClick = () => {
