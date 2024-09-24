@@ -19,17 +19,17 @@ function AddItemModal({ closeActiveModal, activeModal, onAddItem }) {
       weather: values.weatherType,
     };
 
-    onAddItem(newItem)
-    .then(() => {
+    const resetForm = () => {
       setValues({
         name: "",
         imageUrl: "",
         weatherType: "",
       });
-    })
-    .catch((error) => {
-      console.error("Error adding item:", error);
-    });
+    };
+
+
+    onAddItem(newItem, resetForm)
+  
 };
 
   return (

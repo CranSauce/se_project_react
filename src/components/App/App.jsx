@@ -69,7 +69,7 @@ function App() {
     setCurrentTemperatureUnit((prevUnit) => (prevUnit === "C" ? "F" : "C"));
   };
 
-  const handleAddItem = (item) => {
+  const handleAddItem = (item, resetForm) => {
     const newItem = { ...item, weather: item.weather };
 
     setIsLoading(true);
@@ -78,6 +78,7 @@ function App() {
       .then((newItem) => {
         setClothingItems([newItem, ...clothingItems]);
         closeActiveModal();
+        resetForm();
       })
       .catch((error) => console.error("Error adding item:", error))
 
