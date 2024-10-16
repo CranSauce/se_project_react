@@ -45,6 +45,21 @@
   height: 40px;
 }
 
+.header__auth-buttons {
+  display: flex;
+}
+
+.header__signup-btn,
+.header__login-btn {
+  padding: 8px 16px;
+  background-color: transparent;
+  color: black;
+  text-decoration: none;
+  border-style: none;
+  font-weight: 700;
+}
+
+
 .user-info {
   display: flex;
   align-items: center;

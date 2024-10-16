@@ -1,0 +1,15 @@
+.register__modal-btn {
+    width: 73px;
+    
+   }
+
+.modal__login-btn {
+    background-color: transparent;
+    border-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    bottom: 27px;
+    left: 80px;
+    width: 73px;
+}

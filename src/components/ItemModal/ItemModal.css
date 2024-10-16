@@ -71,6 +71,14 @@
   top: calc(100% - 75px);
 }
 
+/* .modal__delete-btn_visible {
+ visibility: visible;
+}
+
+.modal__delete-btn_hidden {
+  visibility: hidden;
+} */
+
 
 @media (max-width: 768px) {
   .modal__image{

@@ -1,21 +1,25 @@
-import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { useState, useEffect, React } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
 import "./App.css";
 import Main from "../Main/Main";
 import ItemModal from "../ItemModal/ItemModal";
 import {
   getWeather,
-  getWeatherType,
   filterWeatherData,
 } from "../../utils/weatherApi";
 import { coordinates, APIkey } from "../../utils/constants";
 import Footer from "../Footer/Footer";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
+import LoginModal from "../LoginModal/LoginModal";
 import Profile from "../Profile/Profile";
 import { getItems, addItem, deleteItem } from "../../utils/api";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
+import RegisterModal from "../RegisterModal/RegisterModal";
+import { checkToken } from "../../utils/auth";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -27,12 +31,40 @@ function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [activeModal, setActiveModal] = useState("");
   const [clothingItems, setClothingItems] = useState([]);
+  const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [selectedCardId, setSelectedCardId] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate(); 
+
+   
+    const onLogin = (data) => {
+      localStorage.setItem("jwt", data.token);  
+      setUser(data.user); 
+      setIsLoggedIn(true);
+      closeActiveModal();
+      navigate("/profile");  
+    };
+  
+    const onRegister = (data) => {
+      localStorage.setItem("jwt", data.token);  
+      setUser(data.user);  
+      setIsLoggedIn(true);
+      closeActiveModal();
+      navigate("/profile");  
+    };
 
   const handleAddClick = () => {
     setActiveModal("add-garment");
+  };
+
+
+  const handleLoginClick = () => {
+    setActiveModal("login");
+  };
+  const handleSignupClick = () => {
+    setActiveModal("register");
   };
 
   const handleCardClick = (cardId) => {
@@ -41,7 +73,6 @@ function App() {
   };
 
   const handleDeleteClick = (cardId) => {
-    console.log(cardId);
     setSelectedCardId(cardId);
     setActiveModal("confirm");
   };
@@ -87,6 +118,23 @@ function App() {
       });
   };
 
+ 
+  useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      checkToken(token)
+        .then((data) => {
+          setUser(data.user);
+          setIsLoggedIn(true);
+        })
+        .catch((err) => {
+          console.error(err);
+          localStorage.removeItem("jwt");
+          setIsLoggedIn(false); 
+        });
+    }
+  }, []);
+
   useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((data) => {
@@ -95,6 +143,13 @@ function App() {
       })
       .catch(console.error);
   }, []);
+
+  useEffect(() => {
+    getItems().then((data) => {
+      setClothingItems(data);
+    });
+  }, []);
+  
 
   useEffect(() => {
     if (!activeModal) return;
@@ -122,11 +177,12 @@ function App() {
 
   return (
     <div className="page">
+      <CurrentUserContext.Provider value={user}>
       <CurrentTemperatureUnitContext.Provider
         value={{ currentTemperatureUnit, handleToggleSwitchChange }}
       >
         <div className="page__content">
-          <Header handleAddClick={handleAddClick} weatherData={weatherData} />
+          <Header handleLoginClick={handleLoginClick} handleSignupClick={handleSignupClick} handleAddClick={handleAddClick} weatherData={weatherData} />
           <Routes>
             <Route
               path="/"
@@ -141,12 +197,14 @@ function App() {
             <Route
               path="/profile"
               element={
+                <ProtectedRoute user={user}>
                 <Profile
                   weatherData={weatherData}
                   onCardClick={handleCardClick}
                   clothingItems={clothingItems}
                   handleAddClick={handleAddClick}
-                />
+                /> 
+                </ProtectedRoute>
               }
             />
           </Routes>
@@ -169,8 +227,21 @@ function App() {
           activeModal={activeModal}
           handleDelete={handleDelete}
         />
+        <LoginModal 
+        activeModal={activeModal}
+        closeActiveModal={closeActiveModal}
+        onLogin={onLogin}
+        openModal={setActiveModal}
+        />
+        <RegisterModal 
+        activeModal={activeModal}
+        closeActiveModal={closeActiveModal}
+        onRegister={onRegister}
+        openModal={setActiveModal}
+        />
         <Footer />
       </CurrentTemperatureUnitContext.Provider>
+      </CurrentUserContext.Provider>
     </div>
   );
 }

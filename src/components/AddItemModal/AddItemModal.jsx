@@ -13,24 +13,20 @@ function AddItemModal({ closeActiveModal, activeModal, onAddItem }) {
     e.preventDefault();
 
     const newItem = {
-      _id: Date.now(),
       name: values.name,
       imageUrl: values.imageUrl,
       weather: values.weatherType,
     };
 
-    const resetForm = () => {
+    onAddItem(newItem, () => {
       setValues({
         name: "",
         imageUrl: "",
         weatherType: "",
       });
-    };
-
-
-    onAddItem(newItem, resetForm)
-  
-};
+      closeActiveModal();
+    });
+  };
 
   return (
     <ModalWithForm
