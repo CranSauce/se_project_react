@@ -1,12 +1,11 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import "./Header.css";
 import logo from "../../assets/Logo.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
 import CurrentUserContext from "../../contexts/CurrentUserContext"; 
-import avatar from "../../assets/Ellipse18.svg"; // Already imported guest avatar
 
-function Header({ handleAddClick, handleLoginClick, handleSignupClick, handleSignOut, weatherData }) {
+function Header({ handleAddClick, handleLoginClick, handleSignupClick, handleSignOut, weatherData, isLoggedIn }) {
   const currentUser = useContext(CurrentUserContext);
 
   const currentDate = new Date().toLocaleString("default", {

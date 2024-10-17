@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import "./ItemCard.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
@@ -10,7 +10,7 @@ function ItemCard({ item, onCardClick, onLikeClick }) {
 
   const handleLikeClick = () => {
     onLikeClick(item._id, isItemLikedByUser)
-      .then(updatedItem => {
+      .then(() => {
         setIsLiked(!isLiked); // Update the like state
       })
       .catch(err => console.error("Failed to update like status:", err));

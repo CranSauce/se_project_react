@@ -1,4 +1,4 @@
-import { useState, useEffect, React } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
 import "./App.css";
@@ -211,6 +211,7 @@ function App() {
           handleSignupClick={handleSignupClick} 
           handleSignOut={handleSignOut}
           handleAddClick={handleAddClick} 
+          isLoggedIn={isLoggedIn}
           weatherData={weatherData} />
           <Routes>
             <Route

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useForm } from "../../hooks/useForm.js";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
@@ -24,9 +24,8 @@ function EditProfileModal({ closeActiveModal, activeModal }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     updateUserProfile(values)
-      .then((updatedUser) => {
-        // Update user context or state
-        closeActiveModal();  // Close modal after successful update
+      .then(() => {
+        closeActiveModal();  
       })
       .catch((err) => {
         console.error("Error updating profile:", err);

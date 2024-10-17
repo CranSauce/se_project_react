@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import avatarPlaceholder from "../../assets/Ellipse18.svg";  // Default avatar image
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./Sidebar.css";
 
@@ -17,7 +16,7 @@ function Sidebar() {
         <img className="sidebar__avatar" src={avatar} alt="User avatar" />
       ) : (
         <div className="sidebar__avatar sidebar__avatar-placeholder">
-          {userInitial || "?"} {/* Show initial or '?' if user is Guest */}
+          {userInitial || "?"} 
         </div>
       )}
       <p className="sidebar__username">{username}</p>
