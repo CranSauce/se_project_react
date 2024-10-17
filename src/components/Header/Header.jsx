@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import CurrentUserContext from "../../contexts/CurrentUserContext"; 
 import avatar from "../../assets/Ellipse18.svg"; // Already imported guest avatar
 
-function Header({ handleAddClick, handleLoginClick, handleSignupClick, weatherData }) {
+function Header({ handleAddClick, handleLoginClick, handleSignupClick, handleSignOut, weatherData }) {
   const currentUser = useContext(CurrentUserContext);
 
   const currentDate = new Date().toLocaleString("default", {
@@ -47,6 +47,13 @@ function Header({ handleAddClick, handleLoginClick, handleSignupClick, weatherDa
               className="header__add-clothes-btn"
             >
               + Add Clothes
+            </button>
+            <button
+              onClick={handleSignOut}
+              type="button"
+              className="header__edit-profile-btn"
+            >
+              Sign Out
             </button>
 
             <Link to="/profile" className="user-info">

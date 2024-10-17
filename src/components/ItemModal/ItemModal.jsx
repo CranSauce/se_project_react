@@ -4,12 +4,13 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function ItemModal({ activeModal, onClose, card, onDeleteClick }) {
   const currentUser = useContext(CurrentUserContext); 
+
   const isOwn = card.owner === currentUser?._id; 
 
   const itemDeleteButtonClassName = `modal__delete-btn ${isOwn ? 'modal__delete-btn_visible' : 'modal__delete-btn_hidden'}`
 
   return (
-    <div className={`modal ${activeModal === "preview" && "modal_opened"} `}>
+    <div className={`modal ${activeModal === "preview" ? "modal_opened" : ""}`}>
       <div className="modal__content_type_preview">
         <button
           onClick={onClose}
@@ -27,7 +28,7 @@ function ItemModal({ activeModal, onClose, card, onDeleteClick }) {
           >
             Delete Item
           </button>
-        )}
+          )}
           <p className="modal__weather">Weather: {card.weather}</p>
         </div>
       </div>

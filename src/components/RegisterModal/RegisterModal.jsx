@@ -78,7 +78,7 @@ function RegisterModal({ closeActiveModal, activeModal, onRegister, openModal })
         />
       </label>
       <label htmlFor="register-avatar" className="modal__label">
-        Avatar URL*
+        Avatar URL
         <input
           id="register-avatar"
           name="avatar"
@@ -87,7 +87,6 @@ function RegisterModal({ closeActiveModal, activeModal, onRegister, openModal })
           placeholder="AvatarURL*"
           type="url"
           className="modal__input modal__input-underline"
-          required
         />
       </label>
     </ModalWithForm>

@@ -3,11 +3,11 @@ import ItemCard from "../ItemCard/ItemCard";
 import "./ClothesSection.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext"; 
 
-function ClothesSection({ onCardClick, clothingItems, handleAddClick }) {
+function ClothesSection({ onCardClick, clothingItems, handleAddClick, handleEditClick, handleLikeClick }) {
   const currentUser = useContext(CurrentUserContext);
 
   const userItems = clothingItems.filter((item) => item.owner === currentUser?._id);
-//todo get the items to render on the profile and make a sign out button and make sure the delete button pops up for the owner
+
   return (
     <div className="clothes-section">
       <div className="clothes-section__header">
@@ -19,10 +19,21 @@ function ClothesSection({ onCardClick, clothingItems, handleAddClick }) {
         >
           + Add New
         </button>
+        <button
+          className="clothes-section__button"
+          type="button"
+          onClick={handleEditClick}
+        >
+          Edit Profile
+        </button>
       </div>
       <ul className="clothes-section__items">
         {userItems.map((item) => (
-          <ItemCard key={item._id} item={item} onCardClick={onCardClick} />
+          <ItemCard
+           key={item._id} 
+           item={item} 
+           onCardClick={onCardClick}
+           onLikeClick={handleLikeClick} />
         ))}
       </ul>
     </div>

@@ -45,4 +45,37 @@ function deleteItem(itemId) {
   });
 }
 
-export { getItems, addItem, deleteItem };
+function updateUserProfile(data) {
+  return request(`${baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`, 
+    },
+    body: JSON.stringify({
+      name: data.name,
+      avatar: data.avatar,
+    }),
+  });
+}
+
+function likeItem(itemId) {
+  return request(`${baseUrl}/items/${itemId}/likes`, {
+    method: "PUT",  // Assuming you're using PUT for liking items
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+}
+
+function dislikeItem(itemId) {
+  return request(`${baseUrl}/items/${itemId}/likes`, {
+    method: "DELETE",  
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+}
+
+
+export { getItems, addItem, deleteItem, updateUserProfile, likeItem, dislikeItem };

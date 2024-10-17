@@ -71,13 +71,13 @@
   top: calc(100% - 75px);
 }
 
-/* .modal__delete-btn_visible {
- visibility: visible;
+.modal__delete-btn_hidden {
+  display: none;
 }
 
-.modal__delete-btn_hidden {
-  visibility: hidden;
-} */
+.modal__delete-btn_visible {
+  display: inline-block; /* Or any other display style you need */
+}
 
 
 @media (max-width: 768px) {

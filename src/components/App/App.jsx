@@ -14,12 +14,13 @@ import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit
 import AddItemModal from "../AddItemModal/AddItemModal";
 import LoginModal from "../LoginModal/LoginModal";
 import Profile from "../Profile/Profile";
-import { getItems, addItem, deleteItem } from "../../utils/api";
+import { getItems, addItem, deleteItem, likeItem, dislikeItem} from "../../utils/api";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import { checkToken } from "../../utils/auth";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -55,6 +56,13 @@ function App() {
       navigate("/profile");  
     };
 
+    const handleSignOut = () => {
+      localStorage.removeItem("jwt"); 
+      setUser(null);                   
+      setIsLoggedIn(false);            
+      navigate("/");                   
+    };
+
   const handleAddClick = () => {
     setActiveModal("add-garment");
   };
@@ -63,6 +71,7 @@ function App() {
   const handleLoginClick = () => {
     setActiveModal("login");
   };
+
   const handleSignupClick = () => {
     setActiveModal("register");
   };
@@ -72,14 +81,29 @@ function App() {
     setSelectedCard(cardId);
   };
 
+  const handleEditClick = () => {
+    setActiveModal("edit-profile");
+  };
+
   const handleDeleteClick = (cardId) => {
     setSelectedCardId(cardId);
     setActiveModal("confirm");
   };
 
+  const handleLikeClick = (itemId, isLiked) => {
+    const apiCall = isLiked ? dislikeItem : likeItem;
+  
+    return apiCall(itemId) // Ensure this returns a promise
+      .then((updatedItem) => {
+        setClothingItems((prevItems) =>
+          prevItems.map((item) => item._id === updatedItem._id ? updatedItem : item)
+        );
+      })
+      .catch((err) => console.error("Error updating like status:", err));
+  };
+
   const handleDelete = () => {
     if (selectedCardId) {
-      console.log("Deleting item with ID:", selectedCardId);
       deleteItem(selectedCardId)
         .then(() => {
           setClothingItems((prevItems) =>
@@ -182,7 +206,12 @@ function App() {
         value={{ currentTemperatureUnit, handleToggleSwitchChange }}
       >
         <div className="page__content">
-          <Header handleLoginClick={handleLoginClick} handleSignupClick={handleSignupClick} handleAddClick={handleAddClick} weatherData={weatherData} />
+          <Header 
+          handleLoginClick={handleLoginClick} 
+          handleSignupClick={handleSignupClick} 
+          handleSignOut={handleSignOut}
+          handleAddClick={handleAddClick} 
+          weatherData={weatherData} />
           <Routes>
             <Route
               path="/"
@@ -191,6 +220,7 @@ function App() {
                   weatherData={weatherData}
                   handleCardClick={handleCardClick}
                   clothingItems={clothingItems}
+                  handleLikeClick={handleLikeClick}
                 />
               }
             />
@@ -203,6 +233,8 @@ function App() {
                   onCardClick={handleCardClick}
                   clothingItems={clothingItems}
                   handleAddClick={handleAddClick}
+                  handleEditClick={handleEditClick}
+                  handleLikeClick={handleLikeClick}
                 /> 
                 </ProtectedRoute>
               }
@@ -221,6 +253,10 @@ function App() {
           card={selectedCard}
           onDeleteClick={handleDeleteClick}
           buttonText={isLoading ? "Saving..." : "Save"}
+        />
+        <EditProfileModal 
+        closeActiveModal={closeActiveModal}
+        activeModal={activeModal}
         />
         <ConfirmationModal
           closeActiveModal={closeActiveModal}
