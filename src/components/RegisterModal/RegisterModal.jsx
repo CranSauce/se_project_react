@@ -1,43 +1,41 @@
+import { useState } from 'react';
+import ModalWithForm from '../ModalWithForm/ModalWithForm';
+import { useForm } from '../../hooks/useForm.js';
+import './RegisterModal.css';
 
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useForm } from "../../hooks/useForm.js";
-import { signup } from "../../utils/auth.js";  
-import "./RegisterModal.css";
-
-function RegisterModal({ closeActiveModal, activeModal, onRegister, openModal }) {
-  const { values, handleChange } = useForm({
-    name: "",
-    avatar: "",
-    email: "",
-    password: "",
+function RegisterModal({ activeModal, onRegister, isLoading, closeActiveModal }) {
+  const { values, handleChange, setValues } = useForm({
+    name: '',
+    avatar: '',
+    email: '',
+    password: '',
   });
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    signup(values.name, values.avatar, values.email, values.password)
-      .then((data) => {
-        localStorage.setItem("jwt", data.token);  
-        onRegister(data); 
-        closeActiveModal();  
-      })
-      .catch((err) => {
-        console.error("Sign up failed:", err);
+    const handleError = (error) => {
+      console.error('Sign up failed:', error);
+      setErrorMessage('Registration failed. Please try again.');
+    };
+
+    onRegister(values, handleError)
+      .then(() => {
+        setValues({ name: '', avatar: '', email: '', password: '' });
       });
   };
 
-
   return (
     <ModalWithForm
-      onClose={closeActiveModal}
-      openModal={openModal}
-      buttonText="Next"
+      buttonText={isLoading ? 'Registering...' : 'Register'}
       buttonClassName="register__modal-btn"
       title="Register"
-      isOpen={activeModal === "register"}
-      isLogin={false}  
+      isOpen={activeModal === 'register'}
       onSubmit={handleSubmit}
+      onClose={closeActiveModal}
     >
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
       <label htmlFor="register-name" className="modal__label">
         Name*
         <input
@@ -84,7 +82,7 @@ function RegisterModal({ closeActiveModal, activeModal, onRegister, openModal })
           name="avatar"
           value={values.avatar}
           onChange={handleChange}
-          placeholder="AvatarURL*"
+          placeholder="Avatar URL"
           type="url"
           className="modal__input modal__input-underline"
         />
@@ -94,3 +92,4 @@ function RegisterModal({ closeActiveModal, activeModal, onRegister, openModal })
 }
 
 export default RegisterModal;
+

@@ -14,10 +14,10 @@ import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit
 import AddItemModal from "../AddItemModal/AddItemModal";
 import LoginModal from "../LoginModal/LoginModal";
 import Profile from "../Profile/Profile";
-import { getItems, addItem, deleteItem, likeItem, dislikeItem} from "../../utils/api";
+import { getItems, addItem, deleteItem, likeItem, dislikeItem, updateUserProfile} from "../../utils/api";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
-import { checkToken } from "../../utils/auth";
+import { checkToken, signin, signup } from "../../utils/auth";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
@@ -39,22 +39,22 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate(); 
 
-   
-    const onLogin = (data) => {
-      localStorage.setItem("jwt", data.token);  
-      setUser(data.user); 
-      setIsLoggedIn(true);
-      closeActiveModal();
-      navigate("/profile");  
-    };
-  
-    const onRegister = (data) => {
-      localStorage.setItem("jwt", data.token);  
-      setUser(data.user);  
-      setIsLoggedIn(true);
-      closeActiveModal();
-      navigate("/profile");  
-    };
+  function handleSubmit(request, handleError) {
+    setIsLoading(true);
+    return request()
+      .then(() => {
+        closeActiveModal();
+      })
+      .catch((error) => {
+        console.error('An error occurred:', error);
+        if (handleError) {
+          handleError(error);
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
 
     const handleSignOut = () => {
       localStorage.removeItem("jwt"); 
@@ -72,8 +72,34 @@ function App() {
     setActiveModal("login");
   };
 
+  const handleLogin = (credentials, handleError) => {
+    const makeRequest = () => {
+      return signin(credentials.email, credentials.password).then((data) => {
+        localStorage.setItem('jwt', data.token);
+        setUser(data.user);
+        setIsLoggedIn(true);
+        navigate('/profile');
+      });
+    };
+
+    return handleSubmit(makeRequest, handleError);
+  };
+
   const handleSignupClick = () => {
     setActiveModal("register");
+  };
+
+  const handleRegister = (credentials, handleError) => {
+    const makeRequest = () => {
+      return signup(credentials).then((data) => {
+        localStorage.setItem('jwt', data.token);
+        setUser(data.user);
+        setIsLoggedIn(true);
+        navigate('/profile');
+      });
+    };
+
+    return handleSubmit(makeRequest, handleError);
   };
 
   const handleCardClick = (cardId) => {
@@ -93,7 +119,7 @@ function App() {
   const handleLikeClick = (itemId, isLiked) => {
     const apiCall = isLiked ? dislikeItem : likeItem;
   
-    return apiCall(itemId) // Ensure this returns a promise
+    return apiCall(itemId)
       .then((updatedItem) => {
         setClothingItems((prevItems) =>
           prevItems.map((item) => item._id === updatedItem._id ? updatedItem : item)
@@ -124,24 +150,26 @@ function App() {
     setCurrentTemperatureUnit((prevUnit) => (prevUnit === "C" ? "F" : "C"));
   };
 
-  const handleAddItem = (item, resetForm) => {
-    const newItem = { ...item, weather: item.weather };
-
-    setIsLoading(true);
-
-    addItem(newItem)
-      .then((newItem) => {
-        setClothingItems([newItem, ...clothingItems]);
-        closeActiveModal();
-        resetForm();
-      })
-      .catch((error) => console.error("Error adding item:", error))
-
-      .finally(() => {
-        setIsLoading(false);
+  const handleAddItem = (item) => {
+    
+    const makeRequest = () => {
+      return addItem(item).then((newItem) => {
+        setClothingItems((prevItems) => [newItem, ...prevItems]);
       });
+    };
+
+    handleSubmit(makeRequest);
   };
 
+  const handleEditProfile = (inputValues) => {
+    const makeRequest = () => {
+      return updateUserProfile(inputValues).then((updatedUser) => {
+        setUser(updatedUser);
+      });
+    };
+
+    handleSubmit(makeRequest);
+  };
  
   useEffect(() => {
     const token = localStorage.getItem("jwt");
@@ -167,13 +195,6 @@ function App() {
       })
       .catch(console.error);
   }, []);
-
-  useEffect(() => {
-    getItems().then((data) => {
-      setClothingItems(data);
-    });
-  }, []);
-  
 
   useEffect(() => {
     if (!activeModal) return;
@@ -246,7 +267,6 @@ function App() {
           closeActiveModal={closeActiveModal}
           activeModal={activeModal}
           onAddItem={handleAddItem}
-          buttonText={isLoading ? "Saving..." : "Save"}
         />
         <ItemModal
           onClose={closeActiveModal}
@@ -258,6 +278,8 @@ function App() {
         <EditProfileModal 
         closeActiveModal={closeActiveModal}
         activeModal={activeModal}
+        onEditProfile={handleEditProfile}
+        isLoading={isLoading}
         />
         <ConfirmationModal
           closeActiveModal={closeActiveModal}
@@ -267,14 +289,15 @@ function App() {
         <LoginModal 
         activeModal={activeModal}
         closeActiveModal={closeActiveModal}
-        onLogin={onLogin}
+        onLogin={handleLogin}
         openModal={setActiveModal}
         />
         <RegisterModal 
         activeModal={activeModal}
         closeActiveModal={closeActiveModal}
-        onRegister={onRegister}
+        onRegister={handleRegister}
         openModal={setActiveModal}
+        isLoading={isLoading}
         />
         <Footer />
       </CurrentTemperatureUnitContext.Provider>

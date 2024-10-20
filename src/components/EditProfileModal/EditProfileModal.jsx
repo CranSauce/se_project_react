@@ -1,43 +1,36 @@
-import { useContext, useEffect } from "react";
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useForm } from "../../hooks/useForm.js";
-import CurrentUserContext from "../../contexts/CurrentUserContext";
-import { updateUserProfile } from "../../utils/api"; 
+import { useContext, useEffect } from 'react';
+import ModalWithForm from '../ModalWithForm/ModalWithForm';
+import { useForm } from '../../hooks/useForm.js';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-function EditProfileModal({ closeActiveModal, activeModal }) {
-  const currentUser = useContext(CurrentUserContext); 
+function EditProfileModal({ activeModal, onEditProfile, isLoading }) {
+  const currentUser = useContext(CurrentUserContext);
 
   const { values, handleChange, setValues } = useForm({
-    name: "",
-    avatar: "",
+    name: '',
+    avatar: '',
   });
 
   useEffect(() => {
     if (currentUser) {
       setValues({
-        name: currentUser.name || "",
-        avatar: currentUser.avatar || "",
+        name: currentUser.name || '',
+        avatar: currentUser.avatar || '',
       });
     }
   }, [currentUser, setValues]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateUserProfile(values)
-      .then(() => {
-        closeActiveModal();  
-      })
-      .catch((err) => {
-        console.error("Error updating profile:", err);
-      });
+    onEditProfile(values);
+    setValues({ name: '', avatar: '' });
   };
 
   return (
     <ModalWithForm
-      onClose={closeActiveModal}
-      buttonText="Save Changes"
+      buttonText={isLoading ? 'Saving...' : 'Save Changes'}
       title="Edit Profile"
-      isOpen={activeModal === "edit-profile"}
+      isOpen={activeModal === 'edit-profile'}
       onSubmit={handleSubmit}
     >
       <label htmlFor="profile-name" className="modal__label">

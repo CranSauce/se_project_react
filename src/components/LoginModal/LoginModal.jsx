@@ -1,41 +1,40 @@
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useForm } from "../../hooks/useForm.js";
-import "./LoginModal.css";
-import { signin } from "../../utils/auth";
+import { useState } from 'react';
+import ModalWithForm from '../ModalWithForm/ModalWithForm';
+import { useForm } from '../../hooks/useForm.js';
+import './LoginModal.css';
 
-function LoginModal({ closeActiveModal, activeModal, onLogin, openModal }) {
-  const { values, handleChange } = useForm({
-    email: "",
-    password: "",
+function LoginModal({ activeModal, onLogin, isLoading, closeActiveModal }) {
+  const { values, handleChange, setValues } = useForm({
+    email: '',
+    password: '',
   });
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    signin(values.email, values.password)
-      .then((data) => {
-        console.log("Login Response:", data);
-        localStorage.setItem("jwt", data.token); 
-        onLogin(data);  
-        closeActiveModal();  
-      })
-      .catch((err) => {
-        console.error("Login failed:", err);
+    const handleError = (error) => {
+      console.error('Login failed:', error);
+      setErrorMessage('Login failed. Please check your credentials.');
+    };
+
+    onLogin(values, handleError)
+      .then(() => {
+        setValues({ email: '', password: '' });
       });
   };
 
-
   return (
     <ModalWithForm
-      onClose={closeActiveModal}
-      openModal={openModal}
-      buttonText="Log In"
+      buttonText={isLoading ? 'Logging in...' : 'Log In'}
       buttonClassName="login__modal-btn"
       title="Log in"
-      isOpen={activeModal === "login"}
-      isLogin={true}  
+      isOpen={activeModal === 'login'}
+      isLogin={true}
       onSubmit={handleSubmit}
+      onClose={closeActiveModal}
     >
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
       <label htmlFor="login-email" className="modal__label">
         Email
         <input

@@ -61,7 +61,7 @@ function updateUserProfile(data) {
 
 function likeItem(itemId) {
   return request(`${baseUrl}/items/${itemId}/likes`, {
-    method: "PUT",  // Assuming you're using PUT for liking items
+    method: "PUT",
     headers: {
       Authorization: `Bearer ${getToken()}`,
     },
