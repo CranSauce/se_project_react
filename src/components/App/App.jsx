@@ -33,6 +33,7 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [clothingItems, setClothingItems] = useState([]);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [selectedCardId, setSelectedCardId] = useState({});
@@ -176,14 +177,20 @@ function App() {
     if (token) {
       checkToken(token)
         .then((data) => {
-          setUser(data.user);
+          console.log('checkToken data:', data); 
+          setUser(data);
           setIsLoggedIn(true);
         })
         .catch((err) => {
           console.error(err);
           localStorage.removeItem("jwt");
           setIsLoggedIn(false); 
+        })
+        .finally(() => {
+          setLoading(false);
         });
+    } else {
+      setLoading(false);
     }
   }, []);
 
@@ -249,7 +256,7 @@ function App() {
             <Route
               path="/profile"
               element={
-                <ProtectedRoute user={user}>
+                <ProtectedRoute user={user} loading={loading}>
                 <Profile
                   weatherData={weatherData}
                   onCardClick={handleCardClick}
@@ -257,6 +264,7 @@ function App() {
                   handleAddClick={handleAddClick}
                   handleEditClick={handleEditClick}
                   handleLikeClick={handleLikeClick}
+                  handleSignOut={handleSignOut}
                 /> 
                 </ProtectedRoute>
               }

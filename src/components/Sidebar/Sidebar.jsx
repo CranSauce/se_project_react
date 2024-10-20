@@ -2,13 +2,13 @@ import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./Sidebar.css";
 
-function Sidebar() {
-  const currentUser = useContext(CurrentUserContext);  // Get current user data from context
+function Sidebar({handleEditClick, handleSignOut}) {
+  const currentUser = useContext(CurrentUserContext);  
 
-  // Check if the user has an avatar or fallback to first letter of name in uppercase
+ 
   const avatar = currentUser?.avatar || null;
   const username = currentUser?.name || "Guest";
-  const userInitial = currentUser?.name?.charAt(0).toUpperCase();  // First letter of name in uppercase
+  const userInitial = currentUser?.name?.charAt(0).toUpperCase();  
 
   return (
     <div className="sidebar">
@@ -20,7 +20,12 @@ function Sidebar() {
         </div>
       )}
       <p className="sidebar__username">{username}</p>
+      <div className="sidebar__buttons">
+      <button type="button" onClick={handleEditClick} className="sidebar__edit-btn">Change User Data</button>
+      <button type="button" onClick={handleSignOut} className="sidebar__signout-btn">Log Out</button>
+      </div>
     </div>
+    
   );
 }
 

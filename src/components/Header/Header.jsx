@@ -5,7 +5,7 @@ import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
 import CurrentUserContext from "../../contexts/CurrentUserContext"; 
 
-function Header({ handleAddClick, handleLoginClick, handleSignupClick, handleSignOut, weatherData, isLoggedIn }) {
+function Header({ handleAddClick, handleLoginClick, handleSignupClick, handleSignOut, weatherData }) {
   const currentUser = useContext(CurrentUserContext);
 
   const currentDate = new Date().toLocaleString("default", {
@@ -52,7 +52,7 @@ function Header({ handleAddClick, handleLoginClick, handleSignupClick, handleSig
               type="button"
               className="header__edit-profile-btn"
             >
-              Sign Out
+              Log Out
             </button>
 
             <Link to="/profile" className="user-info">

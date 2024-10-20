@@ -7,9 +7,33 @@
 .sidebar__avatar {
   width: 56px;
   height: 56px;
+  border-radius: 100px;
 }
 
 .sidebar__username {
   font-weight: 700;
   margin-left: 16px;
 }
+
+.sidebar__buttons{
+  display : flex;
+  flex-direction: column;
+  position: absolute;
+  top: calc(15%);
+  gap: 10px;
+}
+
+.sidebar__edit-btn {
+  border-style: none;
+  background-color: transparent;
+  font-weight: 700;
+  
+}
+
+.sidebar__signout-btn{
+  border-style: none;
+  display: flex;
+  background-color: transparent;
+  font-weight: 700;
+}
+

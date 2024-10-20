@@ -3,7 +3,7 @@ import ItemCard from "../ItemCard/ItemCard";
 import "./ClothesSection.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext"; 
 
-function ClothesSection({ onCardClick, clothingItems, handleAddClick, handleEditClick, handleLikeClick }) {
+function ClothesSection({ onCardClick, clothingItems, handleAddClick, handleLikeClick }) {
   const currentUser = useContext(CurrentUserContext);
 
   const userItems = clothingItems.filter((item) => item.owner === currentUser?._id);
@@ -18,13 +18,6 @@ function ClothesSection({ onCardClick, clothingItems, handleAddClick, handleEdit
           onClick={handleAddClick}
         >
           + Add New
-        </button>
-        <button
-          className="clothes-section__button"
-          type="button"
-          onClick={handleEditClick}
-        >
-          Edit Profile
         </button>
       </div>
       <ul className="clothes-section__items">
