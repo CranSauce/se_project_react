@@ -22,15 +22,7 @@ function EditProfileModal({ activeModal, onEditProfile, isLoading, closeActiveMo
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    onEditProfile(values)
-      .then(() => {
-        setValues({ name: '', avatar: '' });  
-        closeActiveModal(); 
-      })
-      .catch((error) => {
-        console.error("Error updating profile:", error); 
-      });
+    onEditProfile(values);
   };
 
   return (

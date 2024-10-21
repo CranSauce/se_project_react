@@ -16,19 +16,8 @@ function AddItemModal({ activeModal, onAddItem, closeActiveModal }) {
       weather: values.weatherType,
     };
 
-    return onAddItem(newItem)
-      .then(() => {
-        setValues({
-          name: '',
-          imageUrl: '',
-          weatherType: '',
-        });
-        closeActiveModal();  
-      })
-      .catch((error) => {
-        console.error("Error adding item:", error); 
-      });
-  };
+    return onAddItem(newItem);
+  }
 
   return (
     <ModalWithForm

@@ -177,7 +177,6 @@ function App() {
     if (token) {
       checkToken(token)
         .then((data) => {
-          console.log('checkToken data:', data); 
           setUser(data);
           setIsLoggedIn(true);
         })
