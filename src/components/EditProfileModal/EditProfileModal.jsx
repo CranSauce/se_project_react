@@ -3,7 +3,7 @@ import ModalWithForm from '../ModalWithForm/ModalWithForm';
 import { useForm } from '../../hooks/useForm.js';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-function EditProfileModal({ activeModal, onEditProfile, isLoading }) {
+function EditProfileModal({ activeModal, onEditProfile, isLoading, closeActiveModal }) {
   const currentUser = useContext(CurrentUserContext);
 
   const { values, handleChange, setValues } = useForm({
@@ -22,8 +22,15 @@ function EditProfileModal({ activeModal, onEditProfile, isLoading }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onEditProfile(values);
-    setValues({ name: '', avatar: '' });
+
+    onEditProfile(values)
+      .then(() => {
+        setValues({ name: '', avatar: '' });  
+        closeActiveModal(); 
+      })
+      .catch((error) => {
+        console.error("Error updating profile:", error); 
+      });
   };
 
   return (
@@ -32,6 +39,7 @@ function EditProfileModal({ activeModal, onEditProfile, isLoading }) {
       title="Edit Profile"
       isOpen={activeModal === 'edit-profile'}
       onSubmit={handleSubmit}
+      onClose={closeActiveModal}
     >
       <label htmlFor="profile-name" className="modal__label">
         Name

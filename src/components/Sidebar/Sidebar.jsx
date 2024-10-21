@@ -12,21 +12,27 @@ function Sidebar({handleEditClick, handleSignOut}) {
 
   return (
     <div className="sidebar">
-      {avatar ? (
-        <img className="sidebar__avatar" src={avatar} alt="User avatar" />
-      ) : (
-        <div className="sidebar__avatar sidebar__avatar-placeholder">
-          {userInitial || "?"} 
-        </div>
-      )}
-      <p className="sidebar__username">{username}</p>
+      <div className="sidebar__header">
+        {avatar ? (
+          <img className="sidebar__avatar" src={avatar} alt="User avatar" />
+        ) : (
+          <div className="sidebar__avatar sidebar__avatar-placeholder">
+            {userInitial || "?"}
+          </div>
+        )}
+        <p className="sidebar__username">{username}</p>
+      </div>
+      
       <div className="sidebar__buttons">
-      <button type="button" onClick={handleEditClick} className="sidebar__edit-btn">Change User Data</button>
-      <button type="button" onClick={handleSignOut} className="sidebar__signout-btn">Log Out</button>
+        <button type="button" onClick={handleEditClick} className="sidebar__edit-btn">
+          Change User Data
+        </button>
+        <button type="button" onClick={handleSignOut} className="sidebar__signout-btn">
+          Log Out
+        </button>
       </div>
     </div>
-    
-  );
+  );  
 }
 
 export default Sidebar;

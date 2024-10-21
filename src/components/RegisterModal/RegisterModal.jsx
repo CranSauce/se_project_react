@@ -3,7 +3,7 @@ import ModalWithForm from '../ModalWithForm/ModalWithForm';
 import { useForm } from '../../hooks/useForm.js';
 import './RegisterModal.css';
 
-function RegisterModal({ activeModal, onRegister, isLoading, closeActiveModal }) {
+function RegisterModal({ activeModal, onRegister, isLoading, closeActiveModal, openModal }) {
   const { values, handleChange, setValues } = useForm({
     name: '',
     avatar: '',
@@ -34,6 +34,8 @@ function RegisterModal({ activeModal, onRegister, isLoading, closeActiveModal })
       isOpen={activeModal === 'register'}
       onSubmit={handleSubmit}
       onClose={closeActiveModal}
+      isLogin={false}
+      openModal={openModal}
     >
       {errorMessage && <p className="error-message">{errorMessage}</p>}
       <label htmlFor="register-name" className="modal__label">

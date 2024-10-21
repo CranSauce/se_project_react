@@ -11,7 +11,7 @@ function ItemCard({ item, onCardClick, onLikeClick }) {
   const handleLikeClick = () => {
     onLikeClick(item._id, isItemLikedByUser)
       .then(() => {
-        setIsLiked(!isLiked); // Update the like state
+        setIsLiked(!isLiked); 
       })
       .catch(err => console.error("Failed to update like status:", err));
   };

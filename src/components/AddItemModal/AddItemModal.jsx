@@ -10,19 +10,24 @@ function AddItemModal({ activeModal, onAddItem, closeActiveModal }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const newItem = {
       name: values.name,
       imageUrl: values.imageUrl,
       weather: values.weatherType,
     };
 
-    onAddItem(newItem);
-    setValues({
-      name: '',
-      imageUrl: '',
-      weatherType: '',
-    });
+    return onAddItem(newItem)
+      .then(() => {
+        setValues({
+          name: '',
+          imageUrl: '',
+          weatherType: '',
+        });
+        closeActiveModal();  
+      })
+      .catch((error) => {
+        console.error("Error adding item:", error); 
+      });
   };
 
   return (

@@ -1,7 +1,13 @@
 .sidebar {
   display: flex;
-  flex-direction: row;
-  color: black;
+  flex-direction: column; /* Stack elements vertically */
+  align-items: flex-start; /* Align items to the left */
+}
+
+.sidebar__header {
+  display: flex;
+  align-items: center; /* Align avatar and username horizontally */
+  gap: 16px; 
 }
 
 .sidebar__avatar {
@@ -13,28 +19,22 @@
 
 .sidebar__username {
   font-weight: 700;
-  margin-left: 16px;
+  font-size: 1.2rem;
+  color: black;
 }
 
-.sidebar__buttons{
-  display : flex;
-  flex-direction: column;
-  position: absolute;
-  top: calc(15%);
-  gap: 10px;
-}
-
-.sidebar__edit-btn {
-  border-style: none;
-  background-color: transparent;
-  font-weight: 700;
-  
-}
-
-.sidebar__signout-btn{
-  border-style: none;
+.sidebar__buttons {
+  margin-top: 10px;
   display: flex;
-  background-color: transparent;
-  font-weight: 700;
+  align-items: flex-start;
+  flex-direction: column; 
 }
 
+.sidebar__edit-btn,
+.sidebar__signout-btn {
+  border: none;
+  background-color: transparent;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 6px 0;
+}

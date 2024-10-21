@@ -159,7 +159,7 @@ function App() {
       });
     };
 
-    handleSubmit(makeRequest);
+   return handleSubmit(makeRequest);
   };
 
   const handleEditProfile = (inputValues) => {
@@ -169,7 +169,7 @@ function App() {
       });
     };
 
-    handleSubmit(makeRequest);
+    return handleSubmit(makeRequest);
   };
  
   useEffect(() => {

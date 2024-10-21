@@ -3,7 +3,7 @@ import ModalWithForm from '../ModalWithForm/ModalWithForm';
 import { useForm } from '../../hooks/useForm.js';
 import './LoginModal.css';
 
-function LoginModal({ activeModal, onLogin, isLoading, closeActiveModal }) {
+function LoginModal({ activeModal, onLogin, isLoading, closeActiveModal, openModal }) {
   const { values, handleChange, setValues } = useForm({
     email: '',
     password: '',
@@ -33,6 +33,7 @@ function LoginModal({ activeModal, onLogin, isLoading, closeActiveModal }) {
       isLogin={true}
       onSubmit={handleSubmit}
       onClose={closeActiveModal}
+      openModal={openModal}
     >
       {errorMessage && <p className="error-message">{errorMessage}</p>}
       <label htmlFor="login-email" className="modal__label">
