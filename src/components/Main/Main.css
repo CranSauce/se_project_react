@@ -19,4 +19,10 @@
     grid-template-columns: 1fr;
     justify-content: center;
   }
+
+  .cards__text{
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
 }
