@@ -10,7 +10,7 @@ export const signup = (name, avatar, email, password) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name, avatar, email, password }), 
+    body: JSON.stringify( name, avatar, email, password ), 
   }).then(checkResponse);
 };
 
