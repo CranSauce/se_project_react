@@ -4,7 +4,7 @@ const baseUrl = process.env.NODE_ENV === "production"
 import { checkResponse } from './api'; 
 
 export const signup = (name, avatar, email, password) => {
-  return fetch(`${BASE_URL}/signup`, {
+  return fetch(`${baseUrl}/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -14,7 +14,7 @@ export const signup = (name, avatar, email, password) => {
 };
 
 export const signin = (email, password) => {
-  return fetch(`${BASE_URL}/signin`, {
+  return fetch(`${baseUrl}/signin`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export const signin = (email, password) => {
 };
 
 export const checkToken = (token) => {
-  return fetch(`${BASE_URL}/users/me`, {
+  return fetch(`${baseUrl}/users/me`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
